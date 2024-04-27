@@ -39,7 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           disableTransitionOnChange
         >
           <Providers>
-            <Toaster />
+            <Toaster richColors />
             {children}
           </Providers>
         </ThemeProvider>

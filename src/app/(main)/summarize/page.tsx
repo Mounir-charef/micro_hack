@@ -1,32 +1,51 @@
 "use client";
 
 import DropZone from "@/components/DropZone";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { Summary } from "./_components/types";
+import ScoreCard from "./_components/ScoreCard";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { toast } from "sonner";
+import axios from "axios";
 
 const SummarizePage = () => {
   const [file, setFile] = useState<File>();
-  const [data, setData] = useState<any>(null);
 
-  const { isPending, mutate: summarize } = useMutation({
+  const {
+    isPending,
+    mutate: summarize,
+    data,
+    isError,
+  } = useMutation({
     mutationKey: ["summarize", file],
     mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append("text", file);
-      const response = await fetch(
+
+      const res = await axios.post(
         process.env.NEXT_PUBLIC_API_URL + "/summary/",
-        {
-          method: "POST",
-          body: formData,
-        }
+        formData
       );
-      const data = await response.json();
-      return data;
+
+      return res.data as Summary;
     },
 
-    onSuccess: (data) => {
-      setData(data);
+    onError: (error) => {
+      toast.error(error.message);
+    },
+
+    onSuccess: () => {
+      toast.success("Summary generated successfully!");
     },
   });
 
@@ -51,12 +70,51 @@ const SummarizePage = () => {
         Summarize
       </Button>
 
-      {data && (
-        <>
-          <div className="w-full p-4 rounded-lg shadow-md">{data.summary}</div>
+      {data && !isError && (
+        <motion.div
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
+          transition={{
+            duration: 0.3,
+          }}
+          className="flex flex-col gap-8 items-center"
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle>Summary</CardTitle>
+              <CardDescription>
+                {new Date(data.created_at).toLocaleDateString()}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col items-start gap-4">
+              <Link
+                className={buttonVariants({
+                  variant: "link",
+                })}
+                href={data.text}
+                download
+                target="_blank"
+              >
+                {data.text.split("/").pop()}
+              </Link>
 
-          {JSON.stringify(data.scores, null, 2)}
-        </>
+              <p className="font-semibold">{data.summary}</p>
+            </CardContent>
+          </Card>
+
+          {/* {JSON.stringify(data.scores, null, 2)} */}
+          <div className="flex flex-wrap gap-8 max-w-xl justify-center">
+            {Object.entries(data.scores).map(([key, value]) => (
+              <ScoreCard title={key} value={value} key={key} />
+            ))}
+          </div>
+        </motion.div>
       )}
     </div>
   );

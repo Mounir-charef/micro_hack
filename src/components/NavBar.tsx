@@ -23,6 +23,7 @@ const NavBar = () => {
             href="/#"
             className={buttonVariants({
               variant: "link",
+              className: "dark:text-white",
             })}
           >
             Home
@@ -31,6 +32,7 @@ const NavBar = () => {
             href="/#about-us"
             className={buttonVariants({
               variant: "link",
+              className: "dark:text-white",
             })}
           >
             About us
@@ -39,6 +41,7 @@ const NavBar = () => {
             href="/#services"
             className={buttonVariants({
               variant: "link",
+              className: "dark:text-white",
             })}
           >
             Services

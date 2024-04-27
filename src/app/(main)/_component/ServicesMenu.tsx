@@ -15,8 +15,8 @@ const ServicesMenu = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="animate-pulse rounded-full font-semibold text-lg">
-          TRY IT NOW <ArrowDownIcon className="ml-4" strokeWidth={3} />
+        <Button className="animate-pulse rounded-full font-semibold">
+          Try it now <ArrowDownIcon className="ml-4" strokeWidth={3} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
