@@ -1,8 +1,25 @@
+"use client";
+
+import { motion, useInView, useTransform } from "framer-motion";
 import Image from "next/image";
+import { useRef } from "react";
 
 const AboutUs = () => {
+  const ref = useRef(null);
+
   return (
-    <section className="space-y-16">
+    <motion.section
+      id="about-us"
+      ref={ref}
+      className="space-y-16"
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      viewport={{
+        amount: 0.5,
+        once: true,
+      }}
+    >
       <div className="flex gap-4 flex-col md:flex-row items-center justify-between">
         <div className="flex-1 grid items-center">
           <Image
@@ -57,7 +74,7 @@ const AboutUs = () => {
           />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

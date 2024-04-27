@@ -3,11 +3,17 @@ import { Inter as FontSans } from "next/font/google";
 
 import ThemeProvider from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
+import { Metadata } from "next";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
+
+export const metadata: Metadata = {
+  title: "MicroDocs",
+  description: "AI solution for your documents",
+};
 
 interface RootLayoutProps {
   children: React.ReactNode;

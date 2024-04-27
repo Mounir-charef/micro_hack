@@ -20,7 +20,7 @@ const NavBar = () => {
         </Link>
         <nav className="flex-1 bg-muted hidden md:flex py-1 rounded-full items-center justify-around">
           <Link
-            href="#"
+            href="/#"
             className={buttonVariants({
               variant: "link",
             })}
@@ -28,7 +28,7 @@ const NavBar = () => {
             Home
           </Link>
           <Link
-            href="#"
+            href="/#about-us"
             className={buttonVariants({
               variant: "link",
             })}
@@ -36,20 +36,12 @@ const NavBar = () => {
             About us
           </Link>
           <Link
-            href="#"
+            href="/#services"
             className={buttonVariants({
               variant: "link",
             })}
           >
-            Solutions
-          </Link>
-          <Link
-            href="#"
-            className={buttonVariants({
-              variant: "link",
-            })}
-          >
-            Contact Us
+            Services
           </Link>
         </nav>
         <div className="flex gap-2">
