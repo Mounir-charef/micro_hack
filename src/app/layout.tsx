@@ -1,10 +1,8 @@
 import "@/styles/globals.css";
 import { Inter as FontSans } from "next/font/google";
 
-import { cn } from "@/lib/utils";
 import ThemeProvider from "@/components/ThemeProvider";
-import ThemeToggle from "@/components/ThemeToggle";
-import NavBar from "@/components/NavBar";
+import { cn } from "@/lib/utils";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -21,21 +19,20 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <head />
       <body
         className={cn(
-          "min-h-screen h-[200vh] bg-background font-sans antialiased",
+          "min-h-screen bg-background font-sans antialiased",
           fontSans.variable
         )}
       >
+        {/* <ClerkProvider> */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <main>
-            <NavBar />
-            <div className="pt-28 max-w-4xl mx-auto">{children}</div>
-          </main>
+          {children}
         </ThemeProvider>
+        {/* </ClerkProvider> */}
       </body>
     </html>
   );
