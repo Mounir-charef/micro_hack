@@ -102,6 +102,7 @@ const DropZone = ({ file, setFile, ...inputProps }: DropZoneProps) => {
       <Button
         type="button"
         onClick={handleClick}
+        className="rounded-2xl"
         disabled={inputProps.disabled}
       >
         {/* Select File {file && `: ${file.name}`} */}

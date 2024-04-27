@@ -58,7 +58,7 @@ const SummarizePage = () => {
           }
         }}
         disabled={!file || isPending}
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 rounded-2xl"
       >
         Summarize
       </Button>
