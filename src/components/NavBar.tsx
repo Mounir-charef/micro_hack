@@ -6,7 +6,7 @@ import { buttonVariants } from "./ui/button";
 const NavBar = () => {
   return (
     <header className="bg-transparent py-8">
-      <div className="max-w-4xl mx-auto z-50 bg-transparent flex gap-4 items-center">
+      <div className="max-w-4xl mx-auto z-50 bg-transparent justify-between px-4 flex gap-4 items-center">
         <Link
           title="home"
           href="/"
@@ -18,7 +18,7 @@ const NavBar = () => {
         >
           <CodeIcon className="text-primary h-7 w-7" />
         </Link>
-        <nav className="flex-1 bg-muted py-1 rounded-full flex items-center justify-around">
+        <nav className="flex-1 bg-muted hidden md:flex py-1 rounded-full items-center justify-around">
           <Link
             href="#"
             className={buttonVariants({

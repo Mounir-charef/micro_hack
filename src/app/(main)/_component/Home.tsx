@@ -19,7 +19,7 @@ const Home = () => {
           href="/products"
           className={cn(
             buttonVariants(),
-            "group hover:animate-none px-8 rounded-full"
+            "group hover:animate-none px-8 rounded-full font-semibold text-lg"
           )}
         >
           Start a demo{" "}
