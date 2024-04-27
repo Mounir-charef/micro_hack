@@ -6,12 +6,12 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
 const SummarizePage = () => {
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File>();
   const [data, setData] = useState<any>(null);
 
-  const { mutate: summarize, isPending } = useMutation({
+  const { isPending, mutate: summarize } = useMutation({
     mutationKey: ["summarize", file],
-    onMutate: async (file: File) => {
+    mutationFn: async (file: File) => {
       const formData = new FormData();
       formData.append("text", file);
       const response = await fetch(
@@ -22,8 +22,11 @@ const SummarizePage = () => {
         }
       );
       const data = await response.json();
-      setData(data);
       return data;
+    },
+
+    onSuccess: (data) => {
+      setData(data);
     },
   });
 
@@ -37,23 +40,22 @@ const SummarizePage = () => {
       />
 
       <Button
-        onClick={async () => {
+        onClick={() => {
           if (file) {
-            await summarize(file);
+            summarize(file);
           }
         }}
         disabled={!file || isPending}
+        className="flex items-center gap-2"
       >
-        Summurize
+        Summarize
       </Button>
 
       {data && (
         <>
           <div className="w-full p-4 rounded-lg shadow-md">{data.summary}</div>
-          {/* loop throught data.scores object */}
-          {Object.entries(data.scores).map(([key, value]) => (
-            <div key={key}>{`${key}: ${value}`}</div>
-          ))}
+
+          {JSON.stringify(data.scores, null, 2)}
         </>
       )}
     </div>

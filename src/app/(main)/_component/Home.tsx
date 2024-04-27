@@ -2,7 +2,7 @@ import ServicesMenu from "./ServicesMenu";
 
 const Home = () => {
   return (
-    <section id="home" className="flex flex-col items-center py-12 text-center">
+    <section id="home" className="flex flex-col items-center py-6 text-center">
       <h1 className="text-4xl font-bold sm:text-6xl sm:leading-tight">
         Your digital ally for lightning-speed{" "}
         <span className="text-primary">Data Access</span>.

@@ -12,7 +12,7 @@ interface DropZoneProps {
   disabled?: boolean;
 }
 
-const MAX_FILE_SIZE = 1024 * 1024 * 5;
+const MAX_FILE_SIZE = 1024 * 1024 * 5; // 5mb idk does not matter
 
 const checkFile = (file: File, accept?: string) => {
   const allowedTypes = accept?.split(",").map((type) => type.trim()) || [];
@@ -32,6 +32,15 @@ const checkFile = (file: File, accept?: string) => {
 const DropZone = ({ file, setFile, ...inputProps }: DropZoneProps) => {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const hiddenDesc = useRef<HTMLDivElement>(null);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newFile = event.target.files?.[0];
+    if (newFile && checkFile(newFile, inputProps.accept)) {
+      setFile(newFile);
+    }
+  };
+
   const handleClick = () => {
     inputRef.current?.click();
   };
@@ -54,17 +63,12 @@ const DropZone = ({ file, setFile, ...inputProps }: DropZoneProps) => {
     event.preventDefault();
     setDragging(false);
     const file = event.dataTransfer.files[0];
-    console.log(file);
     if (file && checkFile(file, inputProps.accept)) {
       setFile(file);
     }
   };
-
   return (
     <div
-      //   className={`relative flex flex-col items-center justify-center w-48 h-48 border-2 border-dashed rounded-lg ${
-      //     dragging ? "border-primary" : "border-gray-300"
-      //   }`}
       className={cn(
         "relative flex flex-col items-center bg-transparent justify-center h-60 aspect-video border-2 border-dashed rounded-lg",
         {
@@ -73,7 +77,7 @@ const DropZone = ({ file, setFile, ...inputProps }: DropZoneProps) => {
         }
       )}
       aria-label="Drop your file here"
-      aria-describedby="dropzone"
+      aria-describedby={hiddenDesc.current?.id}
       about="Drop your file here"
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
@@ -85,14 +89,8 @@ const DropZone = ({ file, setFile, ...inputProps }: DropZoneProps) => {
         {...inputProps}
         type="file"
         className="hidden"
-        onChange={(event) => {
-          const file = event.target.files?.[0];
-          if (file && checkFile(file, inputProps.accept)) {
-            setFile(file);
-          }
-        }}
+        onChange={handleFileChange}
       />
-
       <UploadIcon className="w-6 h-6 text-primary" />
       <p className="mt-2 text-sm text-gray-500">
         {dragging ? "Drop your file here" : "Drag and drop your file here"}
@@ -106,8 +104,12 @@ const DropZone = ({ file, setFile, ...inputProps }: DropZoneProps) => {
         onClick={handleClick}
         disabled={inputProps.disabled}
       >
-        {file ? file.name : "Drop your file here"}
+        {/* Select File {file && `: ${file.name}`} */}
+        {file ? "Selected File : " + file.name : "Select File"}
       </Button>
+      <div ref={hiddenDesc} id="dropzone-desc" className="sr-only">
+        This dropzone accepts files of the following types: {inputProps.accept}
+      </div>
     </div>
   );
 };
