@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Metadata } from "next";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "@/components/Providers";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -31,19 +32,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontSans.variable
         )}
       >
-        {/* <ClerkProvider> */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Providers>
-            <Toaster richColors />
-            {children}
-          </Providers>
-        </ThemeProvider>
-        {/* </ClerkProvider> */}
+        <ClerkProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Providers>
+              <Toaster richColors />
+              {children}
+            </Providers>
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

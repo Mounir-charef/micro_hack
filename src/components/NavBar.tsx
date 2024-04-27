@@ -1,9 +1,12 @@
+import { SignInButton, UserButton } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { CodeIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
-import { buttonVariants } from "./ui/button";
+import { Button, buttonVariants } from "./ui/button";
 
-const NavBar = () => {
+const NavBar = async () => {
+  const user = await currentUser();
   return (
     <header className="bg-transparent py-8">
       <div className="max-w-4xl mx-auto z-50 bg-transparent justify-between px-4 flex gap-4 items-center">
@@ -49,13 +52,13 @@ const NavBar = () => {
         </nav>
         <div className="flex gap-2">
           <ThemeToggle />
-          {/* {user ? (
+          {user ? (
             <UserButton />
           ) : (
             <SignInButton mode="modal">
               <Button>Sign in</Button>
             </SignInButton>
-          )} */}
+          )}
         </div>
       </div>
     </header>
