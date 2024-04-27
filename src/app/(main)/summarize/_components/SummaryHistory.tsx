@@ -66,8 +66,14 @@ const SummaryHistory = () => {
 
   return (
     <Dialog>
-      <DialogTrigger>Check previous summaries</DialogTrigger>
-      <DialogContent>
+      <DialogTrigger
+        className={buttonVariants({
+          variant: "ghost",
+        })}
+      >
+        Check previous summaries
+      </DialogTrigger>
+      <DialogContent className="top-40">
         <DialogHeader>
           <DialogTitle>Summaries</DialogTitle>
         </DialogHeader>
